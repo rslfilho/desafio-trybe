@@ -5,4 +5,4 @@ node_modules
 .env
 nyc.config.js
 /src/tests
-/src/database/models/index.js
+/src/database/
