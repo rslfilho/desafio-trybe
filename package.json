@@ -1,7 +1,7 @@
 {
   "name": "desafio-trybe",
   "version": "1.0.0",
-  "main": "src/app/index.js",
+  "main": "src/api/index.js",
   "repository": "git@github.com:rslfilho/desafio-trybe.git",
   "author": "Roberval Filho <rslfilho@gmail.com>",
   "license": "MIT",
