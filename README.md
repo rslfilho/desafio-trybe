@@ -39,9 +39,10 @@ Para mais detalhes sobre cada rota, testar a funcionalidade, ver os parâmetros 
 
 ## CI Actions
 
-Foi implementado `Continuous Integration` nessa aplicação: 
+Foi implementado `Continuous Integration` nessa aplicação. Na abertura e atualizações de PR's serão executadas duas `actions`: 
 
-- Na abertura e atualizações de PR's serão executadas duas `actions`. A primeira rodará o ESLint para fazer a análise estática do código. A segunda rodará os testes unitários e de integração para analisar a integridade do código.
+- A primeira rodará o ESLint para fazer a análise estática do código.
+- A segunda rodará os testes unitários e de integração para analisar a integridade do código.
 
 O arquivo com as `actions` pode ser encontrado [aqui](https://github.com/rslfilho/desafio-trybe/tree/main/.github/workflows).
 
