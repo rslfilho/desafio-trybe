@@ -23,17 +23,17 @@ O desafio era a construção de uma API de gerenciamento de usuários e posts de
 
 As rotas disponíveis são:
 
--POST/user
--POST/login
--GET/user
--GET/user/:id
--DELETE/user/me
--POST/post
--GET/post
--GET/post/:id
--PUT/post/:id
--GET/post/search?q=:searchTerm
--DELETE/post/:id
+- POST/user
+- POST/login
+- GET/user
+- GET/user/:id
+- DELETE/user/me
+- POST/post
+- GET/post
+- GET/post/:id
+- PUT/post/:id
+- GET/post/search?q=:searchTerm
+- DELETE/post/:id
 
 Para mais detalhes sobre cada rota, testar a funcionalidade, ver os parâmetros e respostas esperados, acesse o Swagger. (detalhes abaixo)
 
