@@ -8,7 +8,7 @@ const {
 const PostModel = require('../../database/models/post');
 
 describe('O model de Post', () => {
-  const Post = UserModel(sequelize, dataTypes);
+  const Post = PostModel(sequelize, dataTypes);
   const post = new Post();
 
   describe('possui o nome "Post"', () => {
