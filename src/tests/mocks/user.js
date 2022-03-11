@@ -12,6 +12,13 @@ const info = {
   "image": "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
 };
 
+const invalidInfo = {
+  "displayName": "Brett Wiltshire",
+  "email": "brett@email",
+  "password": "123456",
+  "image": "http://4.bp.blogspot.com/_YA50adQ-7vQ/S1gfR_6ufpI/AAAAAAAAAAk/1ErJGgRWZDg/S45/brett.png"
+};
+
 const stored = {
   dataValues: {
     "id": 1,
@@ -29,4 +36,5 @@ module.exports = {
   info,
   token,
   stored,
+  invalidInfo,
 };
