@@ -8,11 +8,11 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
-    "test": "NODE_ENV=test mocha src/tests/**/*$NAME*.test.js --exit",
+    "test": "mocha src/tests/**/*$NAME*.test.js --exit",
     "test:coverage": "nyc --all --reporter=lcov npm run test",
-    "test:unit": "NODE_ENV=test mocha src/tests/01-unit/*$NAME*.test.js --exit",
+    "test:unit": "mocha src/tests/01-unit/**/*$NAME*.test.js --exit",
     "test:unit:coverage": "nyc --all npm run test:unit",
-    "test:integration": "NODE_ENV=test mocha src/tests/02-integration/*$NAME*.test.js --exit",
+    "test:integration": "mocha src/tests/02-integration/**/*$NAME*.test.js --exit",
     "test:integration:coverage": "nyc --all npm run test:integration",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
   },
