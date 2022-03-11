@@ -6,7 +6,7 @@ const userService = require('../../../services/user');
 const userMock = require('../../mocks/user');
 const errorMock = require('../../mocks/errors');
 
-describe.only('O controller da rota POST/user', () => {
+describe('O controller da rota POST/user', () => {
   const response = {};
   const request = {};
   let next;
