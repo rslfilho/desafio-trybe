@@ -8,6 +8,7 @@ module.exports = async ({ displayName, email, password, image }) => {
   if (found) throw errors.userExists;
 
   const created = await User.create({ displayName, email, password, image });
+  delete created.dataValues.password;
 
   const token = jwt.createToken(created);
 
