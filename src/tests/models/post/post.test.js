@@ -5,7 +5,7 @@ const {
   checkPropertyExists,
 } = require('sequelize-test-helpers');
 
-const PostModel = require('../../database/models/post');
+const PostModel = require('../../../database/models/post');
 
 describe('O model de Post', () => {
   const Post = PostModel(sequelize, dataTypes);
