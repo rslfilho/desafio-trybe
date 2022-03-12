@@ -29,6 +29,21 @@ const errors = {
     code: 'bad_request',
     message: '"password" is required',
   },
+  invalidFields: {
+    statusCode: 400,
+    code: 'bad_request',
+    message: 'Campos inválidos',
+  },
+  emptyEmail: {
+    statusCode: 400,
+    code: 'bad_request',
+    message: '"email" is not allowed to be empty',
+  },
+  emptyPassword: {
+    statusCode: 400,
+    code: 'bad_request',
+    message: '"password" is not allowed to be empty',
+  },
 };
 
 module.exports = errors;
