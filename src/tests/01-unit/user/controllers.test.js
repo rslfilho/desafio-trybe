@@ -112,3 +112,35 @@ describe('O controller da rota POST/login', () => {
     });
   });
 });
+
+describe('O controller da rota GET/user', () => {
+  const response = {};
+  const request = {};
+  let next;
+
+  before(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+    next = sinon.stub().returns();
+  });
+
+  describe('Em caso de sucesso', () => {
+    before(() => {
+      sinon.stub(userService, 'getAll').resolves(userMock.userList);
+    });
+
+    after(async () => {
+      await userService.getAll.restore();
+    });
+
+    it('res.status é chamada com o código 200', async () => {
+      await userController.getAll(request, response, next);
+      expect(response.status.calledWith(200)).to.be.true;
+    });
+
+    it('res.json é chamado com a lista de usuários', async () => {
+      await userController.login(request, response, next);
+      expect(response.json.calledWith(userMock.userList)).to.be.true;
+    });
+  });
+});

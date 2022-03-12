@@ -44,6 +44,16 @@ const errors = {
     code: 'bad_request',
     message: '"password" is not allowed to be empty',
   },
+  missingToken: {
+    statusCode: 401,
+    code: 'unauthorized',
+    message: 'Token não encontrado',
+  },
+  jwtMalformed: {
+    statusCode: 401,
+    code: 'unauthorized',
+    message: 'Token expirado ou inválido',
+  },
 };
 
 module.exports = errors;
