@@ -59,9 +59,16 @@ Para acessar a página Swagger da aplicação rodando e/ou testar a aplicação,
 Para fazer requisições à aplicação rodando, faça uma requisição ao endpoint `https://rslfilho-trybe.herokuapp.com/`, exemplo:
 
 ```bash
-curl -X 'GET' \
-  'https://rslfilho-trybe.herokuapp.com/' \
-  -H 'accept: application/json'
+curl -X 'POST' \
+  'https://rslfilho-trybe.herokuapp.com/user' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "displayName": "<digite o usuário>",
+  "email": "<digite o email>",
+  "password": "<digite a senha>",
+  "image": "<digite a url da imagem>"
+}'
 ```
 
 ## Pré-requisitos para rodar a aplicação
@@ -92,8 +99,11 @@ npm install
 3 - Crie um arquivo `.env` na pasta raiz da aplicação com as seguintes variáveis:
 
 ```env
-DATA_URL='https://covid.ourworldindata.org/data/owid-covid-data.json'
-WORLD_KEY='OWID_WRL'
+NODE_ENV=development
+MYSQL_HOST=localhost ou o endereço do seu MySQL
+MYSQL_USER=seu usuário do MySQL
+MYSQL_PASSWORD=sua senha do MySQL
+JWT_SECRET=segredo_forte
 ```
 
 4 - Depois de instaladas as depedências, inicie a aplicação:
@@ -111,16 +121,23 @@ npm start
 6 - Para conseguir uma previsão, faça uma requisição a um dos endpoints da aplicação `http://localhost:3000/`, exemplo:
 
 ```bash
-curl -X 'GET' \
-  'http://localhost:3000/' \
-  -H 'accept: application/json'
+curl -X 'POST' \
+  'http://localhost:3000/user' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "displayName": "<digite o usuário>",
+  "email": "<digite o email>",
+  "password": "<digite a senha>",
+  "image": "<digite a url da imagem>"
+}'
 ```
 
 7 - Para acessar a descrição da API e/ou testar seu funcionamento, ver detalhadamente os parâmetros esperados, as possíveis respostas e sua formatação, basta acessar `http://localhost:3000/swagger/`.
 
 ## Desenvolvimento
 
-Desenolvi essa aplicação usando TDD. Para cada funcionalidade eu desenvolvi antes os testes unitários e de integração de cada parte isolada, depois construi a funcionalidade e assim por diante.
+Desenvolvi essa aplicação usando TDD. Para cada funcionalidade eu desenvolvi antes os testes unitários e de integração de cada parte isolada, depois construi a funcionalidade e assim por diante.
 
 Primeiro fiz o setup da aplicação, instalando as dependências necessárias e organizando a arquitetura que iria usar. Depois fiz a configuração do ORM Sequelize para pode usar ele para lidar com o Banco de Dados MySQL. Após essas etapas iniciais comecei o desenvolvimento dos primeiros testes e funcionalidades.
 
