@@ -28,10 +28,24 @@ const passwordRequired = {
   }
 };
 
+const emailEmpty = {
+  error: {
+    message: '"email" is not allowed to be empty',
+  }
+};
+
+const passwordEmpty = {
+  error: {
+    message: '"password" is not allowed to be empty',
+  }
+};
+
 module.exports = {
   nameLength,
   invalidEmail,
   emailRequired,
   passwordLength,
   passwordRequired,
+  emailEmpty,
+  passwordEmpty,
 };
