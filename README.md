@@ -191,7 +191,7 @@ A API está contida na pasta `/src` dentro da raiz do repositório, nela temos:
 
 ![Cobertura de Testes](./public/test-coverage.png "Test Coverage")
 
-A cobertura de testes atingiu mais de 83%.
+A cobertura de testes atingiu mais de 87%.
 
 ## Pontos de melhoria
 

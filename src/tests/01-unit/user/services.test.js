@@ -3,13 +3,37 @@ const sinon = require('sinon');
 
 const userService = require('../../../services/user');
 const { User } = require('../../../database/models');
-const { jwt } = require('../../../helpers');
+const { jwt, errors } = require('../../../helpers');
 const userMock = require('../../mocks/user');
 const errorMock = require('../../mocks/errors');
 
 describe('O serviço da rota POST/user', () => {
-  describe('retorna erro quando', () => {  
+  describe('em caso de sucesso', () => {
+    let response;
+  
     before(async () => {
+      sinon.stub(User, 'findOne').resolves(userMock.stored.dataValues);
+      sinon.stub(jwt, 'createToken').returns(userMock.token);
+  
+      response = await userService.login(userMock.login);
+    });
+  
+    after(async () => {
+      await User.findOne.restore();
+      await jwt.createToken.restore();
+    });
+  
+    it('retorna uma string', () => {
+      expect(response).to.be.a('string');
+    });
+  
+    it('a string tem o valor esperado', () => {
+      expect(response).to.eql(userMock.token);
+    });
+  });
+  
+  describe('lança um erro quando', () => {  
+    before(() => {
       sinon.stub(User, 'findOne').resolves(userMock.created);
     });
   
@@ -49,6 +73,46 @@ describe('O serviço da rota POST/user', () => {
   
     it('a string tem o valor esperado', () => {
       expect(response).to.eql(userMock.token);
+    });
+  });
+});
+
+describe('O serviço da rota POST/login', () => {
+  describe('lança um erro quando', () => {
+    describe('o usuário não existe no banco de dados', () => {
+      before(() => {
+        sinon.stub(User, 'findOne').resolves(null);
+      });
+    
+      after(async () => {
+        await User.findOne.restore();
+      });
+
+      it('o erro lançado é o esperado', async () => {
+        try {
+          await userService.login(userMock.wrongLogin);
+        } catch(e) {
+          expect(e).to.deep.equals(errors.invalidFields);
+        }
+      });
+    });
+
+    describe('a senha enviada não confere com a do usuário', () => {
+      before(() => {
+        sinon.stub(User, 'findOne').resolves(userMock.stored.dataValues);
+      });
+    
+      after(async () => {
+        await User.findOne.restore();
+      });
+
+      it('o erro lançado é o esperado', async () => {
+        try {
+          await userService.login(userMock.wrongLogin);
+        } catch(e) {
+          expect(e).to.deep.equals(errors.invalidFields);
+        }
+      });
     });
   });
 });
