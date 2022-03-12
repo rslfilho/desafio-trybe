@@ -29,6 +29,21 @@ const stored = {
   }
 };
 
+const login = {
+  "email": "brett@email.com",
+  "password": "123456",
+};
+
+const invalidLogin = {
+  "email": "brett@email",
+  "password": "123456",
+};
+
+const wrongLogin = {
+  "email": "brett@email.com",
+  "password": "1234567",
+};
+
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxLCJkaXNwbGF5TmFtZSI6IkJyZXR0IFdpbHRzaGlyZSIsImVtYWlsIjoiYnJldHRAZW1haWwuY29tIiwiaW1hZ2UiOiJodHRwOi8vNC5icC5ibG9nc3BvdC5jb20vX1lBNTBhZFEtN3ZRL1MxZ2ZSXzZ1ZnBJL0FBQUFBQUFBQUFrLzFFckpHZ1JXWkRnL1M0NS9icmV0dC5wbmcifSwiaWF0IjoxNjQ3MDIxNjA0LCJleHAiOjE2NDc2MjY0MDR9.0QESJ4jkV_megbY3kaLrOJJXFt8oW7xukuaFrFUBiGo';
 
 module.exports = {
@@ -37,4 +52,7 @@ module.exports = {
   token,
   stored,
   invalidInfo,
+  login,
+  invalidLogin,
+  wrongLogin,
 };
