@@ -7,7 +7,7 @@ const { jwt, errors } = require('../../../helpers');
 const userMock = require('../../mocks/user');
 const errorMock = require('../../mocks/errors');
 
-describe('O serviço da rota POST/user', () => {
+describe('O serviço da rota POST/login', () => {
   describe('em caso de sucesso', () => {
     let response;
   
@@ -31,7 +31,47 @@ describe('O serviço da rota POST/user', () => {
       expect(response).to.eql(userMock.token);
     });
   });
-  
+
+  describe('lança um erro quando', () => {
+    describe('o usuário não existe no banco de dados', () => {
+      before(() => {
+        sinon.stub(User, 'findOne').resolves(null);
+      });
+    
+      after(async () => {
+        await User.findOne.restore();
+      });
+
+      it('o erro lançado é o esperado', async () => {
+        try {
+          await userService.login(userMock.wrongLogin);
+        } catch(e) {
+          expect(e).to.deep.equals(errors.invalidFields);
+        }
+      });
+    });
+
+    describe('a senha enviada não confere com a do usuário', () => {
+      before(() => {
+        sinon.stub(User, 'findOne').resolves(userMock.stored.dataValues);
+      });
+    
+      after(async () => {
+        await User.findOne.restore();
+      });
+
+      it('o erro lançado é o esperado', async () => {
+        try {
+          await userService.login(userMock.wrongLogin);
+        } catch(e) {
+          expect(e).to.deep.equals(errors.invalidFields);
+        }
+      });
+    });
+  });
+});
+
+describe('O serviço da rota POST/user', () => {
   describe('lança um erro quando', () => {  
     before(() => {
       sinon.stub(User, 'findOne').resolves(userMock.created);
@@ -77,42 +117,28 @@ describe('O serviço da rota POST/user', () => {
   });
 });
 
-describe('O serviço da rota POST/login', () => {
-  describe('lança um erro quando', () => {
-    describe('o usuário não existe no banco de dados', () => {
-      before(() => {
-        sinon.stub(User, 'findOne').resolves(null);
-      });
-    
-      after(async () => {
-        await User.findOne.restore();
-      });
+describe('O serviço da rota GET/user', () => {
+  let response;
 
-      it('o erro lançado é o esperado', async () => {
-        try {
-          await userService.login(userMock.wrongLogin);
-        } catch(e) {
-          expect(e).to.deep.equals(errors.invalidFields);
-        }
-      });
-    });
+  before(async () => {
+    sinon.stub(User, 'findAll').resolves(userMock.userList);
 
-    describe('a senha enviada não confere com a do usuário', () => {
-      before(() => {
-        sinon.stub(User, 'findOne').resolves(userMock.stored.dataValues);
-      });
-    
-      after(async () => {
-        await User.findOne.restore();
-      });
+    response = await userService.getAll();
+  });
 
-      it('o erro lançado é o esperado', async () => {
-        try {
-          await userService.login(userMock.wrongLogin);
-        } catch(e) {
-          expect(e).to.deep.equals(errors.invalidFields);
-        }
-      });
-    });
+  after(async () => {
+    await User.findAll.restore();
+  });
+
+  it('retorna um array', () => {
+    expect(response).to.be.an('array');
+  });
+
+  it('o array possui objetos', () => {
+    expect(response[0]).to.be.an('object');
+  })
+
+  it('o array é igual ao esperado', () => {
+    expect(response).to.deep.equals(userMock.userList)
   });
 });
