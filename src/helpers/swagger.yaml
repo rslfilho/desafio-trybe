@@ -4,15 +4,18 @@ info:
   title: Blogs API
   version: 0.0.1
   description: |
-    Documentação para a API de Blogs
-    Esta API foi desenvolvida para o desafio técnico da Trybe
-    Aplicante: Roberval Filho
+    Documentação para a API de Blogs.
+
+    Esta API foi desenvolvida para o desafio técnico da Trybe.
+
     Desafio: Arquiteturar e desenvolver uma API de um CRUD de posts de BLOG seguindo requisitos estabelecidos.
+
+    Aplicante: Roberval Filho
 
     Email: rslfilho@gmail.com
     Github: https://github.com/rslfilho
     LinkedIn: https://www.linkedin.com/in/rslfilho/
-    Data: 08/03/2022
+    Data: 08/03/2022 ~ 13/03/2022
 
 securityDefinitions:
   userAuth:
@@ -146,8 +149,8 @@ paths:
         - userAuth: []
       tags:
         - Post
-      summary: "Adiciona um novo BlogPost no banco de dados"
-      description: Verifica se o usuário está autenticado e se as informações enviadas são válidas e, em caso positivo, cadastra o novo BlogPost no banco de dados.
+      summary: "Adiciona um novo Post no banco de dados"
+      description: Verifica se o usuário está autenticado e se as informações enviadas são válidas e, em caso positivo, cadastra o novo Post no banco de dados.
       parameters:
         - in: body
           name: body
@@ -164,7 +167,7 @@ paths:
         - application/json
       responses:
         201:
-          description: BlogPost criado e retorna as informações do post
+          description: Post criado e retorna as informações do post
         400:
           description: Informações enviadas mal formatadas, algum campo inválido
         401:
@@ -176,11 +179,11 @@ paths:
         - userAuth: []
       tags:
         - Post
-      summary: "Lista todos os BlogPosts cadastrados"
-      description: Verifica se o usuário está autenticado e lista todos os BlogPosts cadastrados no banco de dados
+      summary: "Lista todos os Posts cadastrados"
+      description: Verifica se o usuário está autenticado e lista todos os Posts cadastrados no banco de dados
       responses:
         200:
-          description: Retorna todos os BlogPosts cadastrados no banco de dados
+          description: Retorna todos os Posts cadastrados no banco de dados
         401:
           description: Token de autenticação ausente ou incorreto
         500:
@@ -191,14 +194,14 @@ paths:
         - userAuth: []
       tags:
         - Post
-      summary: "Retorna um BlogPost cadastrado a partir do ID"
-      description: Verifica se o usuário está autenticado, recebe o ID pelos parâmetros da rota, busca no banco o BlogPost referente a esse ID e retorna as informações deste post.
+      summary: "Retorna um Post cadastrado a partir do ID"
+      description: Verifica se o usuário está autenticado, recebe o ID pelos parâmetros da rota, busca no banco o Post referente a esse ID e retorna as informações deste post.
       parameters:
         - in: path
           name: id
           type: integer
           required: true
-          description: Id do BlogPost
+          description: Id do Post
       produces:
         - application/json
       responses:
@@ -207,7 +210,7 @@ paths:
         401:
           description: Token de autenticação ausente ou incorreto
         404:
-          description: BlogPost com o ID passado não encontrado no banco de dados
+          description: Post com o ID passado não encontrado no banco de dados
         500:
           description: Erro interno de servidor
     put:
@@ -215,14 +218,14 @@ paths:
         - userAuth: []
       tags:
         - Post
-      summary: "Atualiza o conteúdo de um BlogPost a partir do ID"
+      summary: "Atualiza o conteúdo de um Post a partir do ID"
       description: Verifica se o usuário está autenticado, recebe o ID pelos parâmetros da rota, busca no banco o post referente a esse ID, verifica se o usuário é o criador do post e atualiza as informações deste post.
       parameters:
         - in: path
           name: id
           type: integer
           required: true
-          description: Id do BlogPost
+          description: Id do Post
         - in: body
           name: body
           type: object
@@ -238,13 +241,13 @@ paths:
         - application/json
       responses:
         200:
-          description: Retorna as informações do BlogPost atualizadas
+          description: Retorna as informações do Post atualizadas
         400:
           description: Informações enviadas mal formatadas, algum campo inválido
         401:
           description: Token de autenticação ausente, incorreto ou usuário não é o criador do post
         404:
-          description: BlogPost com o ID passado não encontrado no banco de dados
+          description: Post com o ID passado não encontrado no banco de dados
         500:
           description: Erro interno de servidor
     delete:
@@ -252,21 +255,21 @@ paths:
         - userAuth: []
       tags:
         - Post
-      summary: "Deleta um BlogPost cadastrado a partir do ID"
+      summary: "Deleta um Post cadastrado a partir do ID"
       description: Verifica se o usuário está autenticado, recebe o ID pelos parâmetros da rota, busca no banco o post referente a esse ID, verifica se o usuário é o criador do post e deleta as informações deste post.
       parameters:
         - in: path
           name: id
           type: integer
           required: true
-          description: Id do BlogPost
+          description: Id do Post
       responses:
         204:
-          description: Sem conteúdo
+          description: Post deletado e resposta sem conteúdo
         401:
           description: Token de autenticação ausente, incorreto ou de um usuário sem nível de acesso apropriado
         404:
-          description: BlogPost com o ID passado não encontrado no banco de dados
+          description: Post com o ID passado não encontrado no banco de dados
         500:
           description: Erro interno de servidor
   /post/search:  
@@ -284,7 +287,7 @@ paths:
           description: Termo de busca
       responses:
         200:
-          description: Lista de BlogPosts que contemplem o termo da busca no título ou conteúdo, lista de todos os posts quando o termo de busca é vazio ou lista vazia quando o termo não é encontrado
+          description: Lista de Posts que contemplem o termo da busca no título ou conteúdo, lista de todos os posts quando o termo de busca é vazio ou lista vazia quando o termo não é encontrado
         401:
           description: Token de autenticação ausente ou incorreto
         500:
