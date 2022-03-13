@@ -52,6 +52,17 @@ const postList = [
   },
 ];
 
+const toUpdate = {
+  "title": "Título atualizado",
+  "content": "Conteúdo atualizado",
+};
+
+const updated = {
+  "userId": 1,
+  "title": "Título atualizado",
+  "content": "Conteúdo atualizado",
+};
+
 module.exports = {
   created,
   stored,
@@ -60,4 +71,6 @@ module.exports = {
   invalidBodyInfo,
   postList,
   createReturn,
+  toUpdate,
+  updated,
 };
