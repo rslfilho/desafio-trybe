@@ -164,3 +164,25 @@ describe('O serviço da rota GET/user/:id', () => {
     expect(response).to.deep.equals(userMock.created)
   });
 });
+
+describe('O serviço da rota DELETE/user/me', () => {
+  let response;
+
+  before(async () => {
+    sinon.stub(User, 'destroy').resolves({ info: true});
+
+    response = await userService.remove();
+  });
+
+  after(async () => {
+    await User.destroy.restore();
+  });
+
+  it('retorna um object', () => {
+    expect(response).to.be.an('object');
+  });
+
+  it('o array é igual ao esperado', () => {
+    expect(response).to.deep.equals({ info: true})
+  });
+});
