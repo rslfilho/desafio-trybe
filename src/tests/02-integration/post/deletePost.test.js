@@ -162,12 +162,14 @@ describe('DELETE/post/:id', () => {
     let response;
       before(async () => {
         sinon.stub(jwt, 'validateToken').returns(userMock.created)
+        sinon.stub(Post, 'findByPk').resolves({ userId: 1 });
         sinon.stub(Post, 'destroy').resolves(undefined);
         response = await chai.request(app)
         .delete('/post/1')
         .set('Authorization', userMock.token)
 
       await jwt.validateToken.restore();
+      await Post.findByPk.restore();
       await Post.destroy.restore();
       });
       
