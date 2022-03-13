@@ -12,7 +12,7 @@ describe('O serviço da rota POST/login', () => {
     let response;
   
     before(async () => {
-      sinon.stub(User, 'findOne').resolves(userMock.stored.dataValues);
+      sinon.stub(User, 'findOne').resolves(userMock.stored);
       sinon.stub(jwt, 'createToken').returns(userMock.token);
   
       response = await userService.login(userMock.login);
@@ -53,7 +53,7 @@ describe('O serviço da rota POST/login', () => {
 
     describe('a senha enviada não confere com a do usuário', () => {
       before(() => {
-        sinon.stub(User, 'findOne').resolves(userMock.stored.dataValues);
+        sinon.stub(User, 'findOne').resolves(userMock.stored);
       });
     
       after(async () => {
