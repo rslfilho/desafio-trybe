@@ -35,3 +35,29 @@ describe('O serviço da rota POST/post', () => {
     });
   });
 });
+
+describe('O serviço da rota GET/post', () => {
+  let response;
+
+  before(async () => {
+    sinon.stub(Post, 'findAll').resolves(postMock.postList);
+
+    response = await postService.getAll();
+  });
+
+  after(async () => {
+    await Post.findAll.restore();
+  });
+
+  it('retorna um array', () => {
+    expect(response).to.be.an('array');
+  });
+
+  it('o array possui objetos', () => {
+    expect(response[0]).to.be.an('object');
+  });
+
+  it('o array é igual ao esperado', () => {
+    expect(response).to.deep.equals(postMock.postList)
+  });
+});
