@@ -8,5 +8,6 @@ const router = express.Router({ mergeParams: true });
 router.post('/', validateUser, userController.create);
 router.get('/', auth, userController.getAll);
 router.get('/:id', auth, userController.getById);
+router.delete('/me', auth, userController.remove);
 
 module.exports = router;
