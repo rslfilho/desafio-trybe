@@ -23,10 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     published: {
       type: DataTypes.DATE,
-      allowNull: false,
-      validate: {
-        isDate: true,
-      },
     },
     updated: {
       type: DataTypes.DATE,
