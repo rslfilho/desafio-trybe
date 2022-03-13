@@ -43,3 +43,35 @@ describe('O controller da rota POST/post', () => {
     });
   });
 });
+
+describe('O controller da rota GET/post', () => {
+  const response = {};
+  const request = {};
+  let next;
+
+  before(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+    next = sinon.stub().returns();
+  });
+
+  describe('Em caso de sucesso', () => {
+    before(() => {
+      sinon.stub(postService, 'getAll').resolves(postMock.postList);
+    });
+
+    after(async () => {
+      await postService.getAll.restore();
+    });
+
+    it('res.status é chamada com o código 200', async () => {
+      await postController.getAll(request, response, next);
+      expect(response.status.calledWith(200)).to.be.true;
+    });
+
+    it('res.json é chamado com a lista de usuários', async () => {
+      await postController.getAll(request, response, next);
+      expect(response.json.calledWith(postMock.postList)).to.be.true;
+    });
+  });
+});
