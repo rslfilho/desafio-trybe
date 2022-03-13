@@ -54,6 +54,11 @@ const errors = {
     code: 'unauthorized',
     message: 'Token expirado ou inválido',
   },
+  userNotFound: {
+    statusCode: 404,
+    code: 'not_found',
+    message: 'Usuário não existe',
+  },
 };
 
 module.exports = errors;
