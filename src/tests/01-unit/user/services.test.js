@@ -136,9 +136,31 @@ describe('O serviço da rota GET/user', () => {
 
   it('o array possui objetos', () => {
     expect(response[0]).to.be.an('object');
-  })
+  });
 
   it('o array é igual ao esperado', () => {
     expect(response).to.deep.equals(userMock.userList)
+  });
+});
+
+describe('O serviço da rota GET/user/:id', () => {
+  let response;
+
+  before(async () => {
+    sinon.stub(User, 'findByPk').resolves(userMock.created);
+
+    response = await userService.getById();
+  });
+
+  after(async () => {
+    await User.findByPk.restore();
+  });
+
+  it('retorna um object', () => {
+    expect(response).to.be.an('object');
+  });
+
+  it('o array é igual ao esperado', () => {
+    expect(response).to.deep.equals(userMock.created)
   });
 });
