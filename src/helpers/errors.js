@@ -29,6 +29,16 @@ const errors = {
     code: 'bad_request',
     message: '"password" is required',
   },
+  titleRequired: {
+    statusCode: 400,
+    code: 'bad_request',
+    message: '"title" is required',
+  },
+  contentRequired: {
+    statusCode: 400,
+    code: 'bad_request',
+    message: '"content" is required',
+  },
   invalidFields: {
     statusCode: 400,
     code: 'bad_request',
