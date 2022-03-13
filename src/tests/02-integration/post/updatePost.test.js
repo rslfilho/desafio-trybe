@@ -12,18 +12,19 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('DELETE/post/:id', () => {
+describe('PUT/post/:id', () => {
   describe('Em caso de erro interno', () => {
     let response;
     before(async () => {
       sinon.stub(jwt, 'validateToken').returns(userMock.created)
-      sinon.stub(Post, 'destroy').rejects();
+      sinon.stub(Post, 'findByPk').rejects();
       response = await chai.request(app)
-        .delete('/post/1')
+        .put('/post/1')
         .set('Authorization', userMock.token)
+        .send(postMock.toUpdate);
 
       await jwt.validateToken.restore();
-      await Post.destroy.restore();
+      await Post.findByPk.restore();
     });
 
     it('retorna o código de status 500', () => {
@@ -43,7 +44,7 @@ describe('DELETE/post/:id', () => {
     });
   });
 
-  describe('Não é possível deletar posts', () => {
+  describe('Não é possível atualizar o post', () => {
     describe('que não existem no banco de dados', () => {
       let response;
 
@@ -52,8 +53,9 @@ describe('DELETE/post/:id', () => {
         sinon.stub(jwt, 'validateToken').returns(userMock.created);
 
         response = await chai.request(app)
-          .delete('/post/999')
+          .put('/post/999')
           .set('Authorization', userMock.token)
+          .send(postMock.toUpdate);
         
         await Post.findByPk.restore();
         await jwt.validateToken.restore();
@@ -84,8 +86,9 @@ describe('DELETE/post/:id', () => {
         sinon.stub(jwt, 'validateToken').returns(userMock.created);
 
         response = await chai.request(app)
-          .delete('/post/1')
+          .put('/post/1')
           .set('Authorization', userMock.token)
+          .send(postMock.toUpdate);
         
         await Post.findByPk.restore();
         await jwt.validateToken.restore();
@@ -112,7 +115,7 @@ describe('DELETE/post/:id', () => {
       let response;
       before(async () => {
         response = await chai.request(app)
-          .delete('/post/1')
+          .put('/post/1')
       });
 
       it('retorna o código de status 401', () => {
@@ -136,7 +139,7 @@ describe('DELETE/post/:id', () => {
       let response;
       before(async () => {
         response = await chai.request(app)
-          .delete('/post/1')
+          .put('/post/1')
           .set('Authorization', 'tokenIvalido')
       });
 
@@ -158,23 +161,36 @@ describe('DELETE/post/:id', () => {
     });
   });
 
-  describe('É possível deletar posts com token válido', () => {
+  describe('É possível atualizar posts com token válido', () => {
     let response;
       before(async () => {
         sinon.stub(jwt, 'validateToken').returns(userMock.created)
         sinon.stub(Post, 'findByPk').resolves({ userId: 1 });
-        sinon.stub(Post, 'destroy').resolves(undefined);
+        sinon.stub(Post, 'update').resolves(undefined);
         response = await chai.request(app)
-        .delete('/post/1')
-        .set('Authorization', userMock.token)
+          .put('/post/1')
+          .set('Authorization', userMock.token)
+          .send(postMock.toUpdate)
 
-      await jwt.validateToken.restore();
-      await Post.findByPk.restore();
-      await Post.destroy.restore();
+        await jwt.validateToken.restore();
+        await Post.findByPk.restore();
+        await Post.update.restore();
       });
       
-      it('retorna o código de status 204', () => {
-        expect(response).to.have.status(204);
+      it('retorna o código de status 200', () => {
+        expect(response).to.have.status(200);
+      });
+
+      it('retorna um objeto', () => {
+        expect(response.body).to.be.an('object');
+      });
+
+      it('o objeto possui as propriedades "title", "content" e "userId"', () => {
+        expect(response.body).to.have.all.keys('title', 'content', 'userId');
+      });
+
+      it('o objeto é o esperado', () => {
+        expect(response.body).to.deep.equals(postMock.updated);
       });
   });
 });
