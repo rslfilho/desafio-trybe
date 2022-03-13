@@ -74,6 +74,11 @@ const errors = {
     code: 'not_found',
     message: 'Post não existe',
   },
+  userNotAuthorized: {
+    statusCode: 401,
+    code: 'unauthorized',
+    message: 'Usuário não autorizado',
+  },
 };
 
 module.exports = errors;

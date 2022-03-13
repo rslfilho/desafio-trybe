@@ -126,3 +126,40 @@ describe('O controller da rota GET/post/:id', () => {
     });
   });
 });
+
+describe('O controller da rota DELETE/post/:id', () => {
+  const response = {};
+  const request = {};
+  let next;
+
+  before(() => {
+    response.status = sinon.stub().returns(response);
+    response.end = sinon.stub().returns();
+    next = sinon.stub().returns();
+  });
+
+  describe('Em caso de sucesso', () => {
+    before(() => {
+      sinon.stub(postService, 'remove').resolves(undefined);
+      request.params = { id: 1 };
+      request.user = { id: 1 };
+    });
+
+    after(async () => {
+      await postService.remove.restore();
+      request.params = undefined;
+      request.user = undefined;
+    });
+
+    it('res.status é chamada com o código 204', async () => {
+      await postController.remove(request, response, next);
+      expect(response.status.calledWith(204)).to.be.true;
+    });
+
+    it('res.end é chamado', async () => {
+      await postController.remove(request, response, next);
+      expect(response.end.called).to.be.true;
+    });
+  });
+});
+
