@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe.only('POST/post', () => {
+describe('POST/post', () => {
   describe('Em caso de erro interno', () => {
     let response;
 
