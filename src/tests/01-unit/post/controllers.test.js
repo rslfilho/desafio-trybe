@@ -8,7 +8,7 @@ const userMock = require('../../mocks/user');
 const postMock = require('../../mocks/post');
 const errorMock = require('../../mocks/errors');
 
-describe.only('O controller da rota POST/post', () => {
+describe('O controller da rota POST/post', () => {
   const response = {};
   const request = {};
   let next;

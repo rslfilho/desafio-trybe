@@ -40,6 +40,18 @@ const passwordEmpty = {
   }
 };
 
+const titleRequired = {
+  error: {
+    message: '"title" is required',
+  }
+};
+
+const contentRequired = {
+  error: {
+    message: '"content" is required',
+  }
+};
+
 module.exports = {
   nameLength,
   invalidEmail,
@@ -48,4 +60,6 @@ module.exports = {
   passwordRequired,
   emailEmpty,
   passwordEmpty,
+  titleRequired,
+  contentRequired,
 };
