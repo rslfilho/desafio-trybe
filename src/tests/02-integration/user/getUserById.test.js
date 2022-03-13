@@ -46,9 +46,12 @@ describe('GET/user/:id', () => {
     describe('que não existe no banco de dados', () => {
       let response;
       before(async () => {
+        sinon.stub(jwt, 'validateToken').returns(userMock.created);
         response = await chai.request(app)
           .get('/user/999')
-          .set('Authorization', userMock.token)
+          .set('Authorization', userMock.token);
+
+        await jwt.validateToken.restore();
       });
 
       it('retorna o código de status 404', () => {
@@ -121,7 +124,7 @@ describe('GET/user/:id', () => {
   describe('É possível listar usuário pelo ID com token válido', () => {
     let response;
       before(async () => {
-        sinon.stub(jwt, 'validateToken').returns(userMock.created)
+        sinon.stub(jwt, 'validateToken').returns(userMock.created);
         sinon.stub(User, 'findByPk').resolves(userMock.created);
         response = await chai.request(app)
         .get('/user/1')
