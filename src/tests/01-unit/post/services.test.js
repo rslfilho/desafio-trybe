@@ -106,11 +106,11 @@ describe('O serviço da rota DELETE/post/:id', () => {
 
     describe('quando o usuário autenticado não é proprietário do post', () => {
       before(() => {
-        sinon.stub(Post, 'destroy').resolves({ userId: 15 });
+        sinon.stub(Post, 'findByPk').resolves({ userId: 15 });
       });
     
       after(async () => {
-        await Post.destroy.restore();
+        await Post.findByPk.restore();
       });
 
       it('lança o erro esperado', async () => {
@@ -127,12 +127,14 @@ describe('O serviço da rota DELETE/post/:id', () => {
     let response;
   
     before(async () => {
-      sinon.stub(Post, 'destroy').resolves({ userId: 1 });
+        sinon.stub(Post, 'findByPk').resolves({ userId: 1 });
+        sinon.stub(Post, 'destroy').resolves(undefined);
   
       response = await postService.remove(1, 1);
     });
   
     after(async () => {
+      await Post.findByPk.restore();
       await Post.destroy.restore();
     });
   
