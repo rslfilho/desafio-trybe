@@ -47,10 +47,12 @@ describe('GET/user/:id', () => {
       let response;
       before(async () => {
         sinon.stub(jwt, 'validateToken').returns(userMock.created);
+        sinon.stub(User, 'findByPk').resolves(null);
         response = await chai.request(app)
           .get('/user/999')
           .set('Authorization', userMock.token);
 
+        await User.findByPk.restore();
         await jwt.validateToken.restore();
       });
 
