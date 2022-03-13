@@ -211,3 +211,105 @@ describe('O serviço da rota PUT/post/:id', () => {
     });
   });
 });
+
+describe('O serviço da rota GET/post/search', () => {
+  describe('quando busca um conteúdo do título', () => {
+    let response;
+  
+    before(async () => {
+      sinon.stub(Post, 'findAll').resolves(postMock.postList);
+  
+      response = await postService.search('Título');
+    });
+  
+    after(async () => {
+      await Post.findAll.restore();
+    });
+  
+    it('retorna um array', () => {
+      expect(response).to.be.an('array');
+    });
+  
+    it('o array possui objetos', () => {
+      expect(response[0]).to.be.an('object');
+    });
+  
+    it('o array é igual ao esperado', () => {
+      expect(response).to.deep.equals(postMock.postList)
+    });
+  });
+
+  describe('quando busca um conteúdo do content', () => {
+    let response;
+  
+    before(async () => {
+      sinon.stub(Post, 'findAll').resolves(postMock.postList);
+  
+      response = await postService.search('Conteúdo');
+    });
+  
+    after(async () => {
+      await Post.findAll.restore();
+    });
+  
+    it('retorna um array', () => {
+      expect(response).to.be.an('array');
+    });
+  
+    it('o array possui objetos', () => {
+      expect(response[0]).to.be.an('object');
+    });
+  
+    it('o array é igual ao esperado', () => {
+      expect(response).to.deep.equals(postMock.postList)
+    });
+  });
+
+  describe('quando busca um conteúdo que não tem no banco de dados', () => {
+    let response;
+  
+    before(async () => {
+      sinon.stub(Post, 'findAll').resolves([]);
+  
+      response = await postService.search('Banana');
+    });
+  
+    after(async () => {
+      await Post.findAll.restore();
+    });
+  
+    it('retorna um array', () => {
+      expect(response).to.be.an('array');
+    });
+  
+    it('o array é igual ao esperado', () => {
+      expect(response).to.be.empty;
+    });
+  });
+
+  describe('quando busca uma string vazia', () => {
+    let response;
+  
+    before(async () => {
+      sinon.stub(Post, 'findAll').resolves(postMock.postList);
+  
+      response = await postService.search('');
+    });
+  
+    after(async () => {
+      await Post.findAll.restore();
+    });
+  
+    it('retorna um array', () => {
+      expect(response).to.be.an('array');
+    });
+  
+    it('o array possui objetos', () => {
+      expect(response[0]).to.be.an('object');
+    });
+  
+    it('o array é igual ao esperado', () => {
+      expect(response).to.deep.equals(postMock.postList)
+    });
+  });
+});

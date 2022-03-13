@@ -200,3 +200,103 @@ describe('O controller da rota PUT/post/:id', () => {
     });
   });
 });
+
+describe('O controller da rota GET/post/search', () => {
+  const response = {};
+  const request = {};
+  let next;
+
+  before(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+    next = sinon.stub().returns();
+  });
+
+  describe('quando busca algo dos títulos', () => {
+    before(() => {
+      sinon.stub(postService, 'search').resolves(postMock.postList);
+      request.query = 'Título';
+    });
+
+    after(async () => {
+      await postService.search.restore();
+      request.query = undefined;
+    });
+
+    it('res.status é chamada com o código 200', async () => {
+      await postController.search(request, response, next);
+      expect(response.status.calledWith(200)).to.be.true;
+    });
+
+    it('res.json é chamado com o resultado da busca', async () => {
+      await postController.search(request, response, next);
+      expect(response.json.calledWith(postMock.postList)).to.be.true;
+    });
+  });
+
+  describe('quando busca algo dos conteúdos', () => {
+    before(() => {
+      sinon.stub(postService, 'search').resolves(postMock.postList);
+      request.query = 'Conteúdo';
+    });
+
+    after(async () => {
+      await postService.search.restore();
+      request.query = undefined;
+    });
+
+    it('res.status é chamada com o código 200', async () => {
+      await postController.search(request, response, next);
+      expect(response.status.calledWith(200)).to.be.true;
+    });
+
+    it('res.json é chamado com o resultado da busca', async () => {
+      await postController.search(request, response, next);
+      expect(response.json.calledWith(postMock.postList)).to.be.true;
+    });
+  });
+
+  describe('quando busca algo que não tenha no banco', () => {
+    before(() => {
+      sinon.stub(postService, 'search').resolves([]);
+      request.query = 'Banana';
+    });
+
+    after(async () => {
+      await postService.search.restore();
+      request.query = undefined;
+    });
+
+    it('res.status é chamada com o código 200', async () => {
+      await postController.search(request, response, next);
+      expect(response.status.calledWith(200)).to.be.true;
+    });
+
+    it('res.json é chamado com o resultado da busca', async () => {
+      await postController.search(request, response, next);
+      expect(response.json.calledWith([])).to.be.true;
+    });
+  });
+
+  describe('quando busca uma string vazia', () => {
+    before(() => {
+      sinon.stub(postService, 'search').resolves(postMock.postList);
+      request.query = '';
+    });
+
+    after(async () => {
+      await postService.search.restore();
+      request.query = undefined;
+    });
+
+    it('res.status é chamada com o código 200', async () => {
+      await postController.search(request, response, next);
+      expect(response.status.calledWith(200)).to.be.true;
+    });
+
+    it('res.json é chamado com o resultado da busca', async () => {
+      await postController.search(request, response, next);
+      expect(response.json.calledWith(postMock.postList)).to.be.true;
+    });
+  });
+});

@@ -189,15 +189,16 @@ A API está contida na pasta `/src` dentro da raiz do repositório, nela temos:
 
 ## Cobertura de testes
 
-Desenvolvi mais de 160 asserções entre testes unitários e de integração para cobertura de testes da aplicação.
+Desenvolvi mais de 290 asserções entre testes unitários e de integração para cobertura de testes da aplicação.
 
 ![Cobertura de Testes](./public/test-coverage.png "Test Coverage")
 
-A cobertura de testes atingiu mais de 92%.
+A cobertura de testes atingiu mais de 93%.
 
 ## Pontos de melhoria
 
-
+- Adicionar Docker à aplicação, conteinerizando a mesma e tornando mais simples sua entrega;
+- Criar uma segunda documentação simples para uso por pessoas não desenvolvedoras
 
 ## Contato
 
