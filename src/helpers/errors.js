@@ -69,6 +69,11 @@ const errors = {
     code: 'not_found',
     message: 'Usuário não existe',
   },
+  postNotFound: {
+    statusCode: 404,
+    code: 'not_found',
+    message: 'Post não existe',
+  },
 };
 
 module.exports = errors;

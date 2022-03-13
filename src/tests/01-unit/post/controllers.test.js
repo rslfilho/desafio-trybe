@@ -75,3 +75,54 @@ describe('O controller da rota GET/post', () => {
     });
   });
 });
+
+describe('O controller da rota GET/post/:id', () => {
+  const response = {};
+  const request = {};
+  let next;
+
+  before(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+    next = sinon.stub().returns();
+  });
+
+  describe('em caso de o post não existir', () => {
+    before(() => {
+      sinon.stub(postService, 'getById').resolves(null);
+      request.params = { id: 999 };
+    });
+
+    after(async () => {
+      await postService.getById.restore();
+      request.params = undefined;
+    });
+
+    it('a função next é chamada com o parâmetro correto', async () => {
+      await postController.getById(request, response, next);
+      expect(next.calledWith(errors.postNotFound)).to.be.true;
+    });
+  });
+
+  describe('Em caso de sucesso', () => {
+    before(() => {
+      sinon.stub(postService, 'getById').resolves(postMock.created);
+      request.params = { id: 1 };
+    });
+
+    after(async () => {
+      await postService.getById.restore();
+      request.params = undefined;
+    });
+
+    it('res.status é chamada com o código 200', async () => {
+      await postController.getById(request, response, next);
+      expect(response.status.calledWith(200)).to.be.true;
+    });
+
+    it('res.json é chamado com o usuário esperado', async () => {
+      await postController.getById(request, response, next);
+      expect(response.json.calledWith(postMock.created)).to.be.true;
+    });
+  });
+});

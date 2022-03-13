@@ -61,3 +61,25 @@ describe('O serviço da rota GET/post', () => {
     expect(response).to.deep.equals(postMock.postList)
   });
 });
+
+describe('O serviço da rota GET/post/:id', () => {
+  let response;
+
+  before(async () => {
+    sinon.stub(Post, 'findByPk').resolves(postMock.created);
+
+    response = await postService.getById();
+  });
+
+  after(async () => {
+    await Post.findByPk.restore();
+  });
+
+  it('retorna um object', () => {
+    expect(response).to.be.an('object');
+  });
+
+  it('o array é igual ao esperado', () => {
+    expect(response).to.deep.equals(postMock.created)
+  });
+});
