@@ -163,3 +163,40 @@ describe('O controller da rota DELETE/post/:id', () => {
   });
 });
 
+describe('O controller da rota PUT/post/:id', () => {
+  const response = {};
+  const request = {};
+  let next;
+
+  before(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+    next = sinon.stub().returns();
+  });
+
+  describe('Em caso de sucesso', () => {
+    before(() => {
+      sinon.stub(postService, 'update').resolves(postMock.updated);
+      request.params = { id: 1 };
+      request.user = { id: 1 };
+      request.body = postMock.toUpdate;
+    });
+
+    after(async () => {
+      await postService.update.restore();
+      request.params = undefined;
+      request.user = undefined;
+      request.body = undefined;
+    });
+
+    it('res.status é chamada com o código 200', async () => {
+      await postController.update(request, response, next);
+      expect(response.status.calledWith(200)).to.be.true;
+    });
+
+    it('res.end é chamado', async () => {
+      await postController.update(request, response, next);
+      expect(response.json.calledWith(postMock.updated)).to.be.true;
+    });
+  });
+});
