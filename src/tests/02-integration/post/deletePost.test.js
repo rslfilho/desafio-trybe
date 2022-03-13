@@ -12,7 +12,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe.only('DELETE/post/:id', () => {
+describe('DELETE/post/:id', () => {
   describe('Em caso de erro interno', () => {
     let response;
     before(async () => {
