@@ -143,3 +143,71 @@ describe('O serviço da rota DELETE/post/:id', () => {
     });
   });
 });
+
+describe('O serviço da rota PUT/post/:id', () => {
+  describe('em caso de sucesso', () => {
+    let response;
+  
+    before(async () => {
+        sinon.stub(Post, 'findByPk').resolves({ userId: 1 });
+        sinon.stub(Post, 'update').resolves(undefined);
+  
+      response = await postService.update(1, 1, postMock.toUpdate);
+    });
+  
+    after(async () => {
+      await Post.findByPk.restore();
+      await Post.update.restore();
+    });
+  
+    it('retorna um objeto', () => {
+      expect(response).to.be.an('object');
+    });
+
+    it('o objeto possui as propriedades "title", "content" e "userId"', () => {
+      expect(response).to.have.all.keys('title', 'content', 'userId');
+    });
+
+    it('o objeto é o esperado', () => {
+      expect(response).to.deep.equals(postMock.updated);
+    });
+  });
+
+  describe('em caso de erro', () => {
+    describe('quando o post não existe no banco de dados', () => {
+      before(() => {
+        sinon.stub(Post, 'findByPk').resolves(null);
+      });
+    
+      after(async () => {
+        await Post.findByPk.restore();
+      });
+
+      it('lança o erro esperado', async () => {
+        try {
+          await postService.update(1, 1, postMock.toUpdate);
+        } catch (e) {
+          expect(e).to.deep.equals(errors.postNotFound);
+        }
+      });
+    });
+
+    describe('quando o usuário autenticado não é proprietário do post', () => {
+      before(() => {
+        sinon.stub(Post, 'findByPk').resolves({ userId: 15 });
+      });
+    
+      after(async () => {
+        await Post.findByPk.restore();
+      });
+
+      it('lança o erro esperado', async () => {
+        try {
+          await postService.update(1, 1, postMock.toUpdate);
+        } catch (e) {
+          expect(e).to.deep.equals(errors.userNotAuthorized);
+        }
+      });
+    });
+  });
+});
