@@ -139,8 +139,59 @@ describe('O controller da rota GET/user', () => {
     });
 
     it('res.json é chamado com a lista de usuários', async () => {
-      await userController.login(request, response, next);
+      await userController.getAll(request, response, next);
       expect(response.json.calledWith(userMock.userList)).to.be.true;
+    });
+  });
+});
+
+describe('O controller da rota GET/user/:id', () => {
+  const response = {};
+  const request = {};
+  let next;
+
+  before(() => {
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+    next = sinon.stub().returns();
+  });
+
+  describe('em caso de o usuário não existir', () => {
+    before(() => {
+      sinon.stub(userService, 'getById').resolves(null);
+      request.params = { id: 999 };
+    });
+
+    after(async () => {
+      await userService.getById.restore();
+      request.params = undefined;
+    });
+
+    it('a função next é chamada com o parâmetro correto', async () => {
+      await userController.getById(request, response, next);
+      expect(next.calledWith(errors.userNotFound)).to.be.true;
+    });
+  });
+
+  describe('Em caso de sucesso', () => {
+    before(() => {
+      sinon.stub(userService, 'getById').resolves(userMock.created);
+      request.params = { id: 1 };
+    });
+
+    after(async () => {
+      await userService.getById.restore();
+      request.params = undefined;
+    });
+
+    it('res.status é chamada com o código 200', async () => {
+      await userController.getById(request, response, next);
+      expect(response.status.calledWith(200)).to.be.true;
+    });
+
+    it('res.json é chamado com o usuário esperado', async () => {
+      await userController.getById(request, response, next);
+      expect(response.json.calledWith(userMock.created)).to.be.true;
     });
   });
 });

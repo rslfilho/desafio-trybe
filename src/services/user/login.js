@@ -6,10 +6,12 @@ module.exports = async ({ email, password }) => {
 
   if (!user) throw errors.invalidFields;
   
-  const { password: pass } = user;
+  const { password: pass } = user.dataValues;
 
   if (password !== pass) throw errors.invalidFields;
   
+  delete user.dataValues.password;
+
   const token = jwt.createToken(user);
 
   return token;
