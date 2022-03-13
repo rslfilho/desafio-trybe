@@ -88,11 +88,11 @@ describe('O serviço da rota DELETE/post/:id', () => {
   describe('em caso de erro', () => {
     describe('quando o post não existe no banco de dados', () => {
       before(() => {
-        sinon.stub(Post, 'destroy').resolves(null);
+        sinon.stub(Post, 'findByPk').resolves(null);
       });
     
       after(async () => {
-        await Post.destroy.restore();
+        await Post.findByPk.restore();
       });
 
       it('lança o erro esperado', async () => {
